@@ -1,0 +1,15 @@
+GET:
+curl http://localhost:8080
+
+POST:
+curl -X POST http://localhost:8080 -d "message=Hello, World!"
+
+Send a message from a file:
+curl -X POST http://localhost:8080 --data-binary @yourfile.txt
+
+JSON:
+curl -X POST http://localhost:8080 -H "Content-Type: application/json" -d '{"message":"Hello, World!"}'
+
+This was a simple HTTP server in C.
+Most people just teach what is networking without actually showing whats going on under the hood.
+So here was everything you needed to get an idea of realtime networking in the lowest level. 
