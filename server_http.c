@@ -41,7 +41,7 @@ int main() { // initialize.
     
     // listening for incoming connections.
     if (listen(server, 3) < 0) {
-        printf("listen");
+        printf("not listening");
         close(server);
         exit(1);
     }
