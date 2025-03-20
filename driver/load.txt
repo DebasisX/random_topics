@@ -1,0 +1,19 @@
+ LD [M]  /home/debasis/code/driver/usb_driver.ko
+ BTF [M] /home/debasis/code/driver/usb_driver.ko
+# this marks successful compilation
+
+load driver:
+sudo insmod usb_driver.ko
+
+verify module loaded:
+lsmod | grep usb_driver
+
+logs:
+dmesg | tail -20
+
+unload:
+sudo rmmod usb_driver
+
+generate debug info for BTF (BPF Type Format):
+pahole -C example vmlinux
+# example is the program 

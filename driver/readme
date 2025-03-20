@@ -1,0 +1,33 @@
+device details:
+idVendor=0781, idProduct=5567
+
+
+generate key:
+openssl req -new -x509 -newkey rsa:2048 -keyout MOK.key -out MOK.crt -nodes -days 36500 -subj "/CN=My Kernel Module/"
+this generates a key
+
+import key
+sudo mokutil --import MOK.crt
+
+sign: 
+sudo /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 MOK.key MOK.crt usb_driver.ko
+
+reload driver:
+sudo rmmod usb_driver
+sudo insmod usb_driver.ko
+
+if listed and active then shown here:
+ls /sys/bus/usb/drivers/
+
+unbind official driver usb-storage
+ls /sys/bus/usb/drivers/usb-storage/
+1-2:1.0  bind  unbind
+echo "1-2:1.0" | sudo tee /sys/bus/usb/drivers/usb-storage/unbind
+
+
+attach custom driver manually 
+echo "1234 5678" | sudo tee /sys/bus/usb/drivers/usb_test_driver/new_id
+(Replace 1234 5678 with your actual Vendor ID (VID) and Product ID (PID) from lsusb.)
+
+executable permissions:
+chmod +x /home/user/transfer
